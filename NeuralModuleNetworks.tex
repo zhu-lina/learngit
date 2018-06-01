@@ -1,0 +1,122 @@
+\documentclass[a4paper,18pt]{article}
+\usepackage{picinpar,graphicx}
+	\usepackage{indentfirst}
+		\usepackage{cite}
+			\usepackage{multirow}
+				\usepackage{CJK}
+	\usepackage{cvpr}
+	\usepackage{times}
+	%\usepackage{epsfig}
+	%\usepackage{graphicx}
+	\usepackage{amsmath}
+	\usepackage{amssymb}
+	
+	\cvprfinalcopy % *** Uncomment this line for the final submission
+	
+	\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+	\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+	
+	% Pages are numbered in submission mode, and unnumbered in camera-ready
+	%\ifcvprfinal\pagestyle{empty}\fi
+	%\usepackage{float}
+	%\usepackage{calc}
+					\usepackage{caption2}
+			%	\usepackage{enumerate}
+	\setlength{\parindent}{3em}
+\setlength{\parskip}{1em}
+\pagestyle{plain}
+\linespread{2.0}
+\usepackage[top=1in, bottom=1in, left=1.25in, right=1.25in]{geometry}
+%\usepackage{multicol}
+%\usepackage{lscape}
+%\usepackage[justification=centering]{caption}
+%\twocolum
+%\usepackage{epsfig}
+%\usepackage{graphicx}
+%\graphicspath{{/home/li/图片/}}
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage[breaklinks=true,bookmarks=false]{hyperref}
+%\setcounter{page}{4321}
+%\usepackage{multicol} 
+
+\newenvironment{figurehere}{\def\@captype{figure}}{} 
+\usepackage[colorlinks,linkcolor=red,citecolor=green,anchorcolor=blue,
+backref=page]{hyperref} 
+%\bibliographystyle{plain}
+%\newenvironment{figurehere}{\def\@captype{figure}}{} \usepackage[colorlinks,linkcolor=red,citecolor=green]{hyperref} 
+%\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
+\newcommand{\upcite}[1]{\textsuperscript{\textsuperscript{\cite{#1}}}}
+\author{\textbf{Lina Zhu}\\
+	\textbf{31 May 2018}}
+%\date{\textbf{31 May 2018}}
+ \title{\textbf{\bfseries \LARGE Neural Module Networks} }
+
+\begin{document}
+	\bibliographystyle{IEEEtran}
+	\twocolumn
+%\twocolumn
+%\bibliographystyle{unsrt} 
+%\usepackage{multicol} 
+
+%	\textbf{\bfseries \LARGE Adaptive Education System AI Technology} 
+%\end{center}
+%\begin{center}
+%	Lina Zhu
+%\end{center}
+%\begin{center}
+%	\today
+%\end{center}
+%\bibliographystyle{plain}
+
+\maketitle
+\section{Introduction}
+In this paper, a new model structure (NMN) based on neural module network is introduced. This architecture makes it possible to use joint training of neural collection "modules" to answer questions about the natural language of the image, the "module" dynamically according to the language structure of the deep web. Specifically, the visual question answering task has important application value in man-machine interaction, search and accessibility, and is a subject of great research interest in recent years \cite{Antol_2015_Vqa}. This work requires a complex understanding of the visual scene and natural language. Recent successful approaches have represented the problem as a bunch of words, or used it to encode a problem as a recursive neural network, training a simple classifier on coding problems and images. Unlike these single methods, another line of work for text QA and image QA USES a semantic parser to break the problem down into logical expressions. These logical expressions are calculated based on pure world logical representations and can be provided directly or extracted from images\cite{Krishnamurthyi_2015_Jointly}. In this paper, we propose a technique combining the representation capability of neural network with the flexible component structure provided by the symbolic semantic method. In figure~\ref{pic1}, we first focus on the dog, which passes its output to a location descriptor. Depending on the underlying structure, the messages passed between modules may be original image features, considerations, or classification decisions. Each module is mapped from a specific input to an output type. Different types of modules are displayed in different colors. The attention-generating module (such as dog) is shown in green, while the tag module is shown in blue. Importantly, all modules in NMN are independent and composable, which allows the calculation of each problem instance to be different and may not be observed during training. In addition to NMN, our final answer USES a looping network (LSTM) to read the question, which is an additional step that is important for modeling common knowledge and data set bias \cite{Malinowski_2015_Ask}. We first describe the neural module network, which is a general framework for combining heterogeneous, jointly trained neural modules into deep networks. Next, for the visual QA tasks, we'll show how to construct NMNs based on the output of the semantic parser and use them to successfully complete the set of visual question answering tasks.
+	\begin{figure}[htp]
+	\centering
+	\includegraphics[width=7cm]{figure1.jpg}
+	\caption{   A schematic representation of our proposed model—the
+		shaded gray area is a neural module network of the kind introduced
+		in this paper. 
+ }\label{pic1}
+\end{figure}
+\section{Visualize the neural module network of QA}
+\subsection{From strings to networks}
+After building the module manifest, we now need to assemble them into the layout specified in the problem. The transformation from natural language problem to instantiated neural network is carried out in two steps. First, we map from natural language problems to layouts,specifies the set of modules used to answer a given question and the connections between them. Next we use these layouts to combine the final prediction network. We use the standard pre-trained tools of existing language resources to obtain a structured representation of the problem. Future work may focus on learning this forecasting process with the rest of the system. These symbols indicate that the structure of the prediction network has been determined, rather than the identification of the modules that make up them. The final allocation of modules is entirely determined by the structure of the parsing. All the leaves become search modules, all the internal nodes become transformation or combination modules based on their dependencies, and the root node becomes a domain based description or measurement module. Given the mapping from query to network layout described above, we have a network structure, input image, and output tag for each training example. In many cases, these network structures are different, but there are binding parameters. A network with the same high-level structure but with different instantiations of a single module can be processed in the same batch to achieve efficient computation. As mentioned above, the conversion process is part of the task specification - we find relatively simple expressions are the best, for the problem of natural images and synthetic data (by design) need deeper structure. Table~\ref{table1} provides some summary statistics.
+\begin{table}[h]%[!hbp]
+	\centering 
+	\caption{: Structure summary statistics for neural module networks used in this paper. “types” is the set of high-level module types available.
+	}\label{table1}
+	\tabcolsep0.01in 
+	\begin{tabular}{c|c|c|c|c|c}
+		\hline
+		& types &  instances&  layouts &depth& size\\
+		\hline
+		VQA & find, combine & 877 &51138 &3&4 \\
+	
+		SHAPES &  find, transform, & 8  &  164 &5&6\\
+		\hline
+	\end{tabular}
+\end{table}
+\section{Conclusion}
+This paper introduces the neural module network, which provides a general framework for the collection of learning neural modules, which can be dynamically assembled into any deep network. We have shown that this approach achieves the most advanced level of performance in answering visual questions on an existing data set, especially on an object or attribute. In addition, we introduced a new data set for the high composition problem of simple arrangement of shapes and showed that our method is much better than previous work. So far, we have maintained a strict separation between predicting network structure and learning network parameters. It is not hard to imagine that these two problems may be solved jointly, and the network structure remains uncertain throughout the training and decoding process. This can be done by a whole network, through the use of some advanced mechanism to "follow" the relevant part of the calculation, or with the study of semantic parser\cite{Krishnamurthyi_2015_Jointly} existing tool to integrate. In a follow-up to this article, we'll show you how to combine learning module behavior and parser.
+
+	
+%\nocite{*}
+\small{\bibliographystyle{IEEEtran}
+\bibliography{ref}}
+%\bibliography{1}  
+%\bibliography{1}
+ 
+%\footnote{from"Network newspaper"} 
+%\begin{thebibliography}{0}
+%	\bibitem{pa}   Newell A, Simon H A. Human Problem Solving. Englewood Cliffs, NJ: Prentice-Hall, 1972 
+%	\bibitem{pa}  Minsky M L. The Society of Mind. New York: Simon and Schuster, 1986 
+	%\bibitem{Carvalho.{2011}} Carvalho, R.B., Tavares Ferreira, M.A. Knowledge Management Software. In: Encyclopedia of Knowledge Management.  2nd ed., 2011, pp. 738-749. 
+%	\bibitem{Nonaka.{1995}}     Nonaka, I., Takeuchi, H. The knowledge creating company. Oxford Press, New York. 1995. 
+%\bibitem{Hoffman.{2008}}   Hoffman, R.R., et.al. Knowledge Management Revisited. Intelligent Systems. May/June 2008, pp. 84-87.
+%\bibitem{Baeshen.{2008}}      Baeshen, N.M.S. Knowledge Management and Environmental Decision Support Systems. In: 12th WSEAS International Conference on Computers. 2008, pp. 793-798. 
+%\end{thebibliography}
+%\onecolumn
+   
+\end{document}
