@@ -1,0 +1,62 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{calc}
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+\title{\textbf{Local Binary Convolutional Neural Networks}}
+
+\author{Lina Zhu\\\\2  June 2018}
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+%\setcounter{page}{4321}
+\begin{document}
+
+%%%%%%%%% TITLE
+
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\maketitle
+\begin{abstract}
+We propose local binary convolution(LBC), an efficient alternative to convolutional layers in standard convolutional neural networks. The design principles of LBC are motivated by local binary patterns . The LBC layer comprises of a set of fixed sparse pre-defined binary convolutional filters that are not updated during the training process, a non-linear activation function and a set of learnable linear weights. The linear weights combine the activated filter responses to approximate the corresponding activated filter responses of a standard convolutional layer. The LBC layer affords significant parameter savings, 9x to 169x in the number of learnable parameters compared to a standard convolutional layer. Furthermore, the sparse and binary nature of the weights also results in up to 9x to 169x savings in model size compared to a standard convolutional layer. We demonstrate both theoretically and experimentally that our local binary convolution layer is a good approximation of a
+standard convolutional layer. Empirically, CNNs with LBC layers, called local binary convolutional neural networks, achieves performance parity with regular CNNs on a range of visual datasets while enjoying significant computational savings.
+\end{abstract}
+\section{Introduction}
+The deep learning has achieved great success in a wide range of applications, such as computer vision, speech recognition/natural language processing, machine translation, biomedical data analysis, and so on. The deep convolutional neural network (CNN) has especially great success in solving many computer vision problems in the past few years, thanks to the enormous development of many effective architectures, but to fully end-to-end these networks. The training-learned convolution kernels are (1) computationally expensive, (2) lead to large model sizes, whether it is memory usage or disk space, and (3) the number of overfitting parameters is prone to occur due to limited data. On the other hand, there is an increasing need for deployment, whether learning or reasoning, these systems are all resource-constrained platforms such as self-driving cars, robots, smart phones,smart cameras, smart wearable devices, etc. solve these shortcomings. Several binary versions of CNN have been proposed, which approximate the real-valued weights of density with binary weights. Binary weights bear significant binary savings for computational savings through efficient implementation.\cite{Chen_2015_Compressing} Binarization is done, however, compared to CNN, CNN causes performance to degrade real-valued network weights. In this paper, we propose a reduced alternative approach to the computational complexity of CNNs in execution and the standard CNN. We introduce the local binary convolutional (LBC) layer to approximate the response of nonlinear activation of the standard convolutional layer. The LBC layer contains a fixed sparse binary filter, a nonlinear activation function and a set of computable linear weights, and computes a weighted combination of activated convolutional response maps. Learning is simplified to optimize linear weights rather than optimization
+Convolution filter.
+
+
+\section{LBP with convolution filter}
+The Local Binary Pattern (LBP) is a simple but very powerful feature. Manually designed descriptors are used in the image recognition community rooted in the face. LBP has been widely adopted by many other computer vision, pattern recognition and image processing applications. The traditional LBP operators\cite{Lin_2014_Network} operate on image blocks of size 3x3, 5x5, etc. The LBP descriptor is a pixel patch adjacent to the center pixel formed by sequentially comparing the intensities. In contrast, neighbor center pixels with higher intensity values ​​are assigned a value of 1, otherwise they are assigned a value of zero. Finally, this bit string is read sequentially and mapped to a decimal number (using base 2) as the assigned eigenvalue to the center pixel. These aggregated feature values ​​characterize the local texture in the image. Figure~\ref{pic1} shows an example of LBP encoding for local image patches with sizes 3x3 and 5x5. Different parameters and configurations of LBP recipes can lead to completely different feature descriptors.
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=7cm]{figure1.jpg}
+	\caption{  (L-R) 3 × 3 patch and its LBP encoding, 5 × 5 patch and its LBP encoding. }\label{pic1}
+\end{figure}
+\section{Conclusion}
+Driven by the traditional native binary mode, this paper proposes a local binary convolutional (LBC) layer which is an alternative to the standard CNN convolutional layer. The LBC layer contains a set of sparse binary and randomly generated sets of convolution weights fixed and a set of learnable linear weights. We show that both theoretically and empirically, the LBC module is a standard convolutional layer approximation that also leads to a significant reduction in the number of parameters to be learned during training, 9x to 169x3x3 and 13x13 Size filter. LBC's CNN layer is very suitable for learning with low sample complexity deep CNN low model and computational complexity in a resource-constrained environment due to limited resources. It is recommended that LBCNN perform well in performance and performance as well as multiple small-scale and large-scale standard CNN data sets spanning different network architectures.
+{\small
+\bibliographystyle{plain}
+\bibliography{ref}}
+
+
+
+\end{document}
