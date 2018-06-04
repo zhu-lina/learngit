@@ -1,0 +1,81 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{calc}
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+\title{\textbf{Multi-lead Zero Learning}}
+
+\author{Lina Zhu\\\\4  June 2018}
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+%\setcounter{page}{4321}
+\begin{document}
+
+%%%%%%%%% TITLE
+
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\maketitle
+\begin{abstract}
+The course of extending visual category recognition to large numbers is still challenging. A promising research direction is zero-shot learning, which does not require any training data to identify new classes, but instead relies on some form of ancillary information describing new classes. Our goal is to circumvent this bottleneck by extracting multiples instead of these. Annotation Sources of information from multiple unstructured texts are easily available online. In order to make up for the weaker form in which we have integrated the auxiliary information, we have strengthened the supervision in the form of semantic part annotations in the class we impart knowledge to. We achieve our goal through a joint embedded framework to map multiple text parts and multiple semantic parts into a common space.
+\end{abstract}
+\section{Introduction}
+Getting visual concepts in humans and machines is still very different. This is assuming that the concept of early childhood is mainly learning through visual concepts is a straightforward example method based on sensory information and associated in various ways \cite{Roy_2002_Learning}. However, this simply does not explain the visual knowledge of diverse adults. Many of our knowledge is preserved and transmitted through text and current online resources. This eliminates the need for humans to recognize that an object has seen a single instance of this object. Our goal is to make up for the use of weaker performance losses but to make it more widely available - more visual supervision of our curriculum is shifting with helper language information. Following multimodal embedded paradigm zero learning \cite{Akata_2015_Evaluation}, we have constructed a new framework that uses powerful visual supervising formulae in embedding to be flexible enough to accommodate a wide range of textual sources. Our contributions are as follows: (1) We propose to adjust deep fragmentation embedding\cite{Karpathy_2015_Deep} for language generation to achieve zero-learning to facilitate the integration of multilingual cues and visually embedded information into the joint space. Our framework supports and integrates a wide range of textual and visual resources. (2) We propose a novel language embedding method for unstructured texts and human annotations that do not require any attributes. (3) We use strong supervised semantic part annotations to compensate for weaker but more widely available auxiliary language information. Our latest technology for improving fine-grained zero learning uses unsupervised text sources as supporting letters and supervising attribute annotations. (4) We show that using more powerful visual annotation training allows for the same powerful supervision during the accreditation process without the need to improve zero-shoot performance.
+
+
+\section{experiment}
+In our experimental evaluation, we used the fine-grained California Institute of Technology UCSD Birds dataset containing approximately 60 images of 200 different North American bird populations each. Each class is also annotated with 312 visual attributes. In the zero setting, 150 classes are used for training and 50 other classes are used for training tests. For parametric verification, we also use the zero shot to set 100 courses for the training within the 150 levels of the training set we use, and the rest for validation. We extract the fully connected layer of the picture feature depth CNN from the activation of the picture. We rescaled the image to 224 x 224 and fed it to the network to pre-train the VGG network as a plurality of visual parts in accordance with the 16-layer model architecture. We used the feature image extracted from the annotation part position of the image. To do this, we crop the overlapped image size to a 50x50 wrapper. We draw this particular part position, adjust the size of each border to 224x224 and follow the rest of the pipe. As a supervised language part, we use a manual annotation for each class of attributes with continuous values ​​to measure the strength of each class's attributes.
+\subsection{Partial annotation of strong supervision}
+In addition to using non-linear embedded targets, our joint part is embedded from using multiple visual or linguistic parts. We extracted 19 parts from each image corresponding to the entire image, head, body and the complete bounding box\cite{Zhang_2014_Partbased}, and bounded boxes drawn around 15 parts. We evaluated the impact of the parts in the following manner: (1) Training And use a single part for testing, (2) with multiple training parts and one-piece testing, and (3) training and testing with multiple parts.Zero image classification. For zero image classification, we calculate the average Top-1 accuracy per class in the invisible course. In other words, we consider that only when the predicted category label is a prediction is the correct category label that is matching the image. We average the forecast based on each class. The results are shown in Table~\ref{table1}. For attributes, using multiple visualizations has improved accuracy from 43.3\% to 47.0\% at training time, improving the latest technology. On the other hand, the use of multiple visual components at the test time achieves 56.5\% accuracy, further improving the latest technology of supervision on this data set. For word bags, the use of multiple visual effects parts increased accuracy by 26.0\%. The multiple visual parts reached an impressive 32.1\% accuracy as the new technology gained without using humans is supervised in language. These results support our intuition that the use of powerful semantically supervised visual parts leads to more discernible image tables and thus helps to classify fine-grained images taken from zero point shots.
+\begin{table}[h]%[!hbp]
+	\centering 
+	\caption{ Multiple visual parts (VP) for classification. VP
+		are extracted from the annotations that are provided with the
+		dataset.}\label{table1}
+	%\resizebox{\textwidth}{25mm}{
+	\tabcolsep 0.1in 
+	\begin{tabular} {|c|c|c|c|c|}
+		\hline
+	Train VP &Test VP & Attributes& word2vec&BoW\\
+	\hline
+		1& 1 &43.3&25.0&21.8\\
+			\hline	
+		19 & 1&47.0&26.8&22.6\\
+			\hline
+		19 & 19 & 56.5& 32.1&26.0\\
+			\hline
+	\end{tabular}
+\end{table}
+%\begin{figure}[htp]
+	%\centering
+	%\includegraphics[width=7cm]{figure1.jpg}
+	%\caption{  (L-R) 3 × 3 patch and its LBP encoding, 5 × 5 patch and its LBP encoding. }\label{pic1}
+%\end{figure}
+\section{Conclusion}
+We learned experimental conditions that allow the integration of different categories of descriptions and detailed part annotations, and thus significantly improve the state-of-the-art of the two tasks within the scope. In particular, we have shown how to compensate for the loss of precision used with weaker auxiliary information level annotations with detailed visual parts. Our approach helps to jointly embed multilingual parts and visual information in a joint space. With strong visual supervision and user-friendly attention attributes we improved the latest technology CUB datasets to supervised settings in 56.5\% (from 50.2\%), we combined different unsupervised texts to embed and further improved the results of unsupervised settings to 34.7 \%. As a conclusion, we propose several fine-grained extended zero-point learning. First, using multiple visual parts, if available, ie training or testing time, instead of using a visual part leads to a significant increase in performance. Second, it can support the further improvement of these multi-language parts of multiple visual parts. Third, the space does contain some information and distances between potential class and attribute names that can eliminate expensive human annotation associations for class attributes. Following these practices, we have improved the fine-grained zero-shooting state and unsupervised text embeddings under supervision.
+{\small
+\bibliographystyle{plain}
+\bibliography{ref}}
+
+
+
+\end{document}
