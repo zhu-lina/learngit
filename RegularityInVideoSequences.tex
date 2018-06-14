@@ -1,0 +1,97 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{calc}
+\usepackage{indentfirst} 
+\usepackage{multirow} 
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}} #2\end{tabular}}
+\usepackage{stfloats}
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+%\setcounter{page}{4321}
+\begin{document}
+\title{Regularity in Video Sequences}
+\author{Lina Zhu\\\\June 14 ,2018}
+%%%%%%%%% TITLE
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\maketitle
+\begin{abstract}
+Abstract
+Sensing meaningful activities in long video sequences is a challenging issue of “meaning” and confusion in the scene due to ambiguous definitions. We solve this problem by learning a generated model. The use of multiple supervisory rules is very limited. Specifically, we propose two approaches based on automatic encoders because they have little or no supervision. We first use traditional manual spatio-temporal local functions and learn fully connected automatic encoders for them. Second, we have built a complete convolutional learning native function into an end-to-end learning framework. Our model can capture rules from multiple data sets. We evaluate our qualitative and quantitative methods from various aspects of displaying video learning patterns and displaying anomalous competitive performance detection datasets as applications.
+\end{abstract}
+\section{Introduction}
+The availability of a large number of uncontrolled videos leads to long-time pointless scenes \cite{Sun_2014_Ranking}. Automated segmentation makes sense with a very limited supervision of these video moments without supervision. It is a variety of basic problems in computer vision applications such as video annotation\cite{Vondrick_2013_Efficiently}, abstract, indexing or time-segmentation\cite{Laptev_2008_Learning}, Anomaly detection and activity identification\cite{Karpathy_2014_Large-scale}. Instead of modeling supervised sparse irregularities or meaningful moments in a supervised attitude, we model the time to solve this problem with limited oversight. Learning meaningful time visual features or significant moments is a very challenging definition of these moments is not clear, that is, there is no visual limit. On the other hand, it is easier to learn time visual features, because they often show the regularity of time, such as periodic crowd movements. We focus on learning the characteristics of regular time patterns through very limited labeling. We assume that all events in the training video are part of the regular pattern. In particular, we use multiple video sources, such as different data sets, to learn the regular temporal appearance of changing the video mode in a single mode and then use it for multiple videos. Given the training data of regular videos, the time dynamics of learning regular scenes is an unsupervised learning problem. This unsupervised state-of-the-art method modeling involves sparsely coded combination bags\cite{Lu_2013_Abnormal}\cite{Zhao_2011_Online}\cite{Cong_2011_Sparse}. In addition, optimizing sparse coding training and testing involving both are computationally expensive, especially with large amounts of data, such as video. We propose a method based on an automatic encoder. Its objective function is more efficient than computational sparse coding and preserves spatiotemporal information while encoding dynamics.
+
+\par The learned automatic encoder reconstructs regular motion with low error but results in higher error in recreating irregular motion. Figure~\ref{pic1} shows an example of a learning rule, which is a learning model calculated from reconstruction errors. We suggest that automatic encoders that learn the regularity of time are based on the following two types of functions. First, we use state-of-the-art hand-crafted motion functions and learn neural network-based deep automatic encoders to form fully connected layers. The most advanced sports functions, however, may not be optimal for learning time rules because they are not designed or optimized for this problem. Subsequently, we directly understand these two kinds of motion features and use a fully convoluted discriminative rule pattern based on a neural network-based automatic encoder.
+\begin{figure}
+	\centering
+	\includegraphics[width=7cm]{figure1.jpg}
+	\caption{ Learned regularity of a video sequence. Y-axis refers
+		to regularity score and X-axis refers to frame number. When there
+		are irregular motions, the regularity score drops significantly. }\label{pic1}
+\end{figure}
+
+\section{Related Work}
+Learn unsupervised exercise patterns. The pattern of learning without supervision has received a lot of attention in recent years\cite{Le_2011_Learning}\cite{Jhuang_2007_A}\cite{Taylor_2010_Convolutional}.Learn previous signatures for the same time and use it for event retrieval, anomaly detection. One of the applications of our model is abnormal or abnormal event detection. The survey report contains comprehensive comments on this topic. The most video-based anomaly detection method involves a local feature extraction step and then learns the model in the training video. Any event that is anomalous to the learning model is considered abnormal. These models include the components of the mixed optical flow of probabilistic subjects , sparse dictionaries\cite{Lu_2013_Abnormal}\cite{Zhao_2011_Online}, probability frameworks based on Gaussian regression , spatiotemporal contexts, sparse automatic encoders, Based on the space-time volume analysis of the codebook\cite{Roshtkhari_2013_Online}, compared with the shape , our model is an end-to-end training generator that can be generalized over multiple data sets. Convolutional neural networks (CNN) perform regular systems in end-to-end learning video.
+
+\begin{figure*}[htp]
+	\centering
+	\includegraphics[width=17cm]{figure2.jpg}
+	\caption{ Overview of our approach. It utilizes either state-of-the-art motion features or learned features combined with autoencoder to
+		reconstruct the scene. The reconstruction error is used to measure the regularity score that can be further analyzed for different applications. }\label{pic2}
+\end{figure*}
+\section {Approach}
+We use automatic encoders to learn regularity in video sequences. Intuition is an automatic encoder that learns to reconstruct a motion signature in a regular video with low error, but does not accurately reconstruct irregular motion video. In other words, the automatic encoder can model the dynamic complex distribution changes of the appearance rules. As an input to an automatic encoder, we initially used state-of-the-art techniques to manually create motion features with improved trajectory features by HOG and HOF\cite{Wang_2013_Action}. Then we learn a network-based auto-encoder that automates signatures by neural rules. However, even out-of-the-box national movement characteristics may not be optimal for learning patterns because they are not designed specifically for this purpose. Therefore, we use video as input and learn two local motion functions based on a complete convolutional neural network through an end-to-end learning model. We illustrate our overview of the method in Figure~\ref{pic2}.
+
+\section{Conclusion}
+We propose a limited supervision of the use of automatic encoders to learn regular patterns. We first use traditional spatio-temporal local features and learn fully connected automatic encoders. Then we build a complete convolutional autoencoder to learn local features and classifiers in a single learning framework. Our model can be generalized across multiple data sets, even using potential dataset biases. We analyze our learning model in many ways, such as visualizing regular frames and pixels, and predicting that the past and the future of conventional video will have only one image in the future. For quantitative analysis, we show that our method is competitive with the most advanced anomaly detection methods.
+{\small
+\bibliographystyle{ieee}
+\bibliography{ref}} 
+\end{document}
+%\begin{table*}[tp]%[!hbp]
+%\centering 
+%	\caption{ \textbf{Detection (AP\%) on NYUD2 test set:}Detection (AP\%) on NYUD2 test set: We compare our performance (pool5 hallucinate) against a Fast R-CNN RGB
+%	detector trained on NYUD2 and against an ensemble of Fast R-CNN RGB detectors.}\label{table1}
+%\resizebox{\textwidth}{25mm}{
+%	\tabcolsep 0.0001in 
+%	\begin{tabular} {c|ccccccccccccccccccc|c}
+%	\hline 
+%	method& btub~~& bed ~~&bshelf~~ & box ~~ &chair~~ & counter~~ & desk ~~ &door ~~&dresser ~~& gbin~~  &lamp~~  &monitor~~  & nstand ~~ &pillow ~~ &sink~~ & sofa ~~& table\\
+%	\hline
+%	RGB only    &7.5 ~~ &50.6~~  &36.8  &1.4 & 30.2 & 34.9  &10.8 & 21.5 & 27.8 & 16.9 & 26.0 & 32.6  &20.6 & 25.1 & 31.6 & 36.7 & 14.8
+%	\\
+%	RGB ensemble   &10.5 & 53.7 & 33.6  &1.6 & 32.0 & 34.8  &12.2 & 20.8 & 34.5  &19.6& 28.6& 45.7  &28.5  &24.4 & 31.4  &34.7 & 14.5 \\
+
+%	Our Net  & 13.9 & 56.1  &34.4 & 1.9  &32.9  &40.5 & 12.9 & 22.6 & 37.4  &22.0  &28.9 & 46.2  &31.9 & 22.9 & 34.2  &34.2 &19.4  \\
+%	\hline
+%	RGB only   &15.6 & 59.4  &38.2  &1.9  &33.8 & 36.3 & 12.1 & 24.5 & 31.6  &18.6  &25.5  &46.5  &30.1  &20.6 & 30.3 & 40.5 & 19.5  \\
+%	RGB ensemble   &14.8  &60.4 & 43.1 & 2.1 & 36.4  &40.7  &13.3 & 27.1 & 35.5 & 20.8 & 29.9 & 52.9  &33.5  &26.2  &33.0 & 44.4  &19.9 \\
+%	Our Net &16.8 & 62.3 & 41.8 & 2.1 & 37.3  &43.4  &15.4  &24.4  &39.1  &22.4  &30.3 & 46.6  &30.9 & 27.0  &42.9 & 46.2  &22.2
+%\\
+%	\hline 
+
+%	\end{tabular}
+%\end{table*}
