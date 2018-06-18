@@ -1,0 +1,91 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{calc}
+\usepackage{indentfirst} 
+\usepackage{multirow} 
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}} #2\end{tabular}}
+\usepackage{stfloats}
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+%\setcounter{page}{4321}
+\begin{document}
+	\title{Retrieval of Natural Language Problems}
+	\author{Lina Zhu\\\\June 18 ,2018}
+%%%%%%%%% TITLE
+
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\maketitle
+\begin{abstract}
+	In this article, we address the task retrieval of natural language tasks to locate the object-based natural language query images within a given target object. Natural language object retrieval is different from text-based images because it involves spatial information about the objects in the context of the scene and the global scene. Our model handles query text, local image descriptors,
+	the spatial configuration and global context features query the text that is conditional on each candidate box through the probability of a regular network output as a score for this box, and can transmit the visual language knowledge image caption field to our task. Experimental results demonstrate that our method effectively uses local and global information, significantly differs from previous benchmark methods in different data sets and scenarios, and can utilize large-scale visual and linguistic data sets for knowledge transfer.
+\end{abstract}
+\section{Introduction}
+Significant progress has been made in target detection in recent years; with the help of convolutional neural networks (CNN), a set of predefined high-precision object classes can be detected\cite{Girshick_2014_Rich}and the number of categories in object detection has grown to more than 10K to 100K with domain adaptation and hash help. However, in a practical application scenario, rather than using a predefined, fixed set of object categories, one would generally prefer to refer to objects in natural language rather than using pre-defined category labels. This natural language query can include different types of phrases, such as categories, attributes, spatial configurations, and interactions with other objects, such as this young lady in a white dress sitting on the left or right side of the white car in Figure ~\ref{pic1}. In this article, we solve the problem of natural language retrieval of objects: given images and natural language descriptions as the objects of the query, we want to retrieve objects by localizing the objects in the image.
+\par Natural language object retrieval can be viewed as generic generic object detection and has a wide range of applications. For example, a local user who handles natural language commands in robots can request the robot to pick up the TV remote control on the shelf. We construct natural language object retrieval as a set of candidate locations for a retrieval task in a given image, as shown in Figure~\ref{pic1}. Where candidate locations can come from object proposal methods, we observe that only text-based image retrieval is applied from candidate locations. The system on the cropped image area causes low performance because of this task, as the natural language object retrieval involves spatial configuration objects and global scenes as contexts. Although both text-based image retrieval and natural language object retrieval involve co-modeling images and texts, they are different visions and linguistic domains that transfer domain names from the entire image to bounding boxes.
+\begin{figure}
+	\centering
+	\includegraphics[width=7cm]{figure1.jpg}
+	\caption{Overview of our method. Given an input image, a text
+		query and a set of candidate locations , a recurrent neural network model is used to score candidate
+		locations based on local descriptors, spatial configurations
+		and global context. The highest scoring candidate is retrieved.}\label{pic1}
+\end{figure}
+\section{Related Work}
+Natural language object retrieval. Based on a bag of word sentence models and an embedded classifier derived from ImageNET solves problems similar to ours and localizes queries within the image based on text. Given a set of candidate target areas, generates a textual representation from the candidate as a bagged text using the category name predicted from the large-scale pre-training
+the classifier compares the word bag with the query text. Other methods generate visual features from the query text and match them to the image area, for example, by text embedding phrases and visual features for the primary image search engine\cite{Arandjelovic_2012_Multiple} or a combination of learning texts. In our work at the same time, \cite{Mao_2016_Generation} also proposed a circular network model to locate the object from the given description. The object from the image description is grounded. Specific to an image and its description statement, \cite{Karpathy_2014_Deep}aligns the sentence by embedding the detection result into a segment of the image from a pre-trained object detector and dependency tree from the loss of the resolver. \cite{Karpathy_2015_Deep}builds on\cite{Karpathy_2014_Deep} and replaces the dependency tree with a bidirectional RNN. Canonical correlation analysis is used to learn the joint embedding of image regions and text segments to locate each object mentioned in the title. Use a structural prediction model to keep the text consistent with the image and the reason about the common reference of objects in the text parsed by the 3D scene.
+
+\par At the same time as this paper, uses the attention model to provide reference phrases in the participating image descriptions to the areas where the phrases can be best reconstructed. The image title method enters the image and generates a text description of it. Recently, a method based on a recurrent neural network \cite{Vinyals_2015_Show}has proved effective in this task. Image retrieval is a text-based image retrieval system that selects the most suitable image query text from a set of images. In image retrieval, the learning ranking function is through a recurrent neural network \cite{Donahue_2015_Long}, metric learning, correlation analysis\cite{Klein_2014_Fisher} and other methods.
+\begin{table}[tp]%[!hbp]
+	\centering 
+	\caption{Top-1 precision of our method compared with baselines
+		on annotated bounding boxes in ReferIt dataset.}\label{table1}
+	%\resizebox{\textwidth}{25mm}{
+		\tabcolsep 0.0001in 
+		\begin{tabular} {|c|c|c|}
+			\hline
+			Method &P@1-NR& P@1  \\
+			\hline 
+			CAFFE-7K & 32.53\%   &27.73\%   \\
+			LRCN &-& 38.38\%  \\
+			SCRC (w/o context, spatial, transfer)& - &61.03\% \\
+			SCRC (w/o context, spatial)& -& 64.09\%  \\
+			SCRC (w/o context)& - &70.15\%   \\
+			SCRC& -& 72.74\%   \\
+			\hline 
+			
+		\end{tabular}
+	\end{table}
+\section{Experiments}
+experiment
+We evaluated our method on a small dataset with a large scale. More experimental results can be found in supplementary materials. A 7K large-scale fine-grained classifier object class is trained on ImageNET. In each box, the candidate set is classified into one of the 7K classes, and a packet word is extracted from the predicted object class based on ImageNET and a synonym containing its category name. The word bag is then projected into the vector space and a score is obtained using the cosine matching to the expected query text distance. Sentence projection in is predefined and is the only training involved in training 7K object classifiers. Please note that also proposes an instance matching model that depends on the online API at the time of the test. As in this work, we assume an independent system without resorting to other APIs.
+\section{Result}
+Table~\ref{table1} shows all the annotation box pictures in the top-1 precision scene candidate set. The highest precision in all cases includes non-informative results where random guesses are used. The results show that our complete SCRC model achieved the highest pre-1 accuracy. As can be seen in Table~\ref{table1}, pre-training the image captions, adding spatial configurations, and adding scene-level contexts all improve performance, because the spatial configuration is not only so beneficial in the query if spatial relationships are directly involved, but also There are locations of objects that enable the network to learn prior assignments.
+\section{Conclusion}
+In this article, we discuss natural language object retrieval and spatial context recursion. The recursive neural network model for recursive candidate boxes is based on local image descriptors, spatial configuration, and global context-level contexts. We show that natural language object retrieval is significantly more efficient in merging spatial configurations and global environments to improve performance. The cyclic network model used in our approach led to an end-to-end training scoreability feature, which is significantly better than the benchmark method.
+{\small
+	\bibliographystyle{plain}
+	\bibliography{ref}} 
+\end{document}
