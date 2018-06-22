@@ -1,0 +1,64 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+\usepackage{cvpr}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{calc}
+\usepackage{indentfirst} 
+\usepackage{multirow} 
+%\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}} #2\end{tabular}}
+\usepackage{stfloats}
+% Include other packages here, before hyperref.
+
+% If you comment hyperref and then uncomment it, you should delete
+% egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
+% run, let it finish, and you should be clear).
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\cvprfinalcopy % *** Uncomment this line for the final submission
+
+\def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+%\ifcvprfinal\pagestyle{empty}\fi
+%\setcounter{page}{4321}
+\begin{document}
+\title{Dense Light Field Recognition}
+\author{Lina Zhu\\\\June 22 ,2018}
+%%%%%%%%% TITLE
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\maketitle
+\section{Introduction}
+The light field can be viewed as a generalization of the 2D image, which encodes most of the depth cues and allows the rendering of a scene that simulates any optical device. This is a convenient representation of multi-viewpoint and light live displays~\cite{Wetzstein_2012_Tensor}, and an attractive format that captures high-quality movie content and offers the possibility of new post-production editing. Due to the huge storage space requirements, the light field is usually sparsely sampled in spatial and angular dimensions, using lossy compressed storage, and later reconstructed. It is unclear how distortions affect the perceived quality of the journey. 2D images, videos, and sparse multi-view content have been solved for similar problems. Many quality indicators have versions that aim to predict the same content for a variety of different perceptual differences. However, measuring intensive light field quality is still a complex task. Although some works apply existing indicators to these contents~\cite{Dansereau_2013_Light}, their performance has never been systematically assessed in this regard. One of the challenges is to collect intensive light field data to verify metrics. Wide baselines need to be considered in multi-camera rigs~\cite{Wilburn_2005_High}, and reference light fields should be dense enough to avoid uncontrolled visual artifacts. Acquiring people's reply Due to the current display, the distortion of the optical field is also difficult to limit.
+
+\section{Data description}
+According to the experimental needs, we designed and rendered 9 composites and captured 5 real-world scenes (Figure~\ref{pic1}). They span many different kinds of conditions, such as outdoors and indoors, daytime and nighttime. They also contain object properties with a large number of different appearances. The depth distribution of scene objects is studied by the separation of artifacts with large variations and depth discontinuities. For capturing real-world scenes, we use a one meter long motorized linear stage with Canon cameras and 50mm and 28mm lenses. For the rendered image, we use a camera with an off-axis asymmetric frustum. For real-world scenes, the same effect is achieved through the application of horizontal to personal perspectives. All light fields have the same spatial and angular resolution. The angular resolution is chosen high enough to avoid visible angle aliasing. This is achieved by ensuring that the maximum screen difference between successive views is approximately 1 pixel. In order to ensure a comfortable viewing effect, the overall range of differences during the presentation is limited to 0.2 visual degrees~\cite{Shibata_2011_The}.
+\begin{figure}
+	\centering
+	\includegraphics[width=8cm]{figure1.jpg}
+	\caption{Representative images of all light fields in our collection. Below each image representative EPIs are presented.}\label{pic1}
+\end{figure}
+%\begin{figure*}[htp]
+%\centering
+	%\includegraphics[width=17cm]{figure2.jpg}
+	%\caption{ Overview of our approach. It utilizes either state-of-the-art motion features or learned features combined with autoencoder to
+	%	reconstruct the scene. The reconstruction error is used to measure the regularity score that can be further analyzed for different applications. }\label{pic2}
+%\end{figure*}
+\section{Conclusion}
+Together we have established a dense optical field data set with subjective mass scaling and various distortions that occur in light field applications. Different methods result in visual artifacts that have a very different appearance in light field processing. Our experiments reveal how these different artifacts affect perceived quality.
+
+
+
+{\small
+	\bibliographystyle{plain}
+	\bibliography{ref}} 
+\end{document}
